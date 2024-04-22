@@ -188,12 +188,12 @@ public class yahtzee {
         int count = 0;
     
         while(true)  {
-            boolean shouldContinue = false;  // Flag to determine whether to continue rerolling.
+            boolean shouldContinue = false;  // ifall loopen ska fortsätta
 
             System.out.println("Count: "+ count);
            
-            List<Integer> dice = rollDices(6-count);  // Start by rolling 6 dice.
-            System.out.println("Rolled: " + dice);  // Display dice roll results for transparency.
+            List<Integer> dice = rollDices(6-count);  // börja med 6 dice
+            System.out.println("Rolled: " + dice);  
 
             int matchesThisRound = 0;
     
@@ -201,28 +201,27 @@ public class yahtzee {
             for (int die : dice) {
                 System.out.format("%d %b",die,die==number);
                 if (die == number) {
-                    matchesThisRound++;
-                    shouldContinue = true;  // Set flag to true if target number is found.
+                    matchesThisRound++; //räknar hur mpnga matches vi har
+                    shouldContinue = true;  // ifall vi hittar det nummer vi har så fortsätter loopen annars stannar den returnar hur många vi fick
                 }
             }
     
-            count += matchesThisRound;  // Update total count of matches.
+            count += matchesThisRound;  // kolla hur många matches vi har
     
-            // Check the reroll condition based on the last roll.
 
             if (shouldContinue) {
                 System.out.format("Count: %d \n Should continue: %b",count,shouldContinue);
-                dice = rollDices(dice.size() - matchesThisRound);  // Roll only non-matching dice.
+                dice = rollDices(dice.size() - matchesThisRound);  // rullar bara om tärningar som inte har värdet vi har ifall vi kan rulla
                 continue;
             } else {
-                break;  // Exit loop if no target number was rolled or all dice matched.
+                break;  // lämna loop ifall vi inte fick nåt
             }
         } 
 
-        return count;  // Return the total count of the target number obtained.
+        return count;  
     }
     
-    
+    //väljer spelare att attackera ifall det finns fler än en spelare
     private static String chooseOpponent(String currentPlayer) {
         List<String> opponents = new ArrayList<>(list_of_players.keySet());
         opponents.remove(currentPlayer);
@@ -241,6 +240,7 @@ public class yahtzee {
         }
     }
 
+    //listar ut vem som vann med den enda personen som är kvar
     private static void declareWinner() {
         if (list_of_players.size() == 1) {
             String winner = list_of_players.keySet().iterator().next();
